@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: reflective
+    runtime: static
+    repo: https://github.com/theemubin/reflective
+    buildCommand: npm install; npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false
+      - key: VITE_GEMINI_API_KEY
+        sync: false
+      - key: VITE_GEMINI_MODEL
+        sync: false
+      - key: VITE_GEMINI_FALLBACK_MODEL
+        sync: false
+      - key: VITE_GROK_API_KEY
+        sync: false
+      - key: VITE_GROK_MODEL
+        sync: false
