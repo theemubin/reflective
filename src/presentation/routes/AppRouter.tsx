@@ -1,4 +1,4 @@
-﻿import type { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { useState } from 'react'
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button } from '@mui/material'
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
@@ -18,6 +18,9 @@ import MentorDashboardPage from '../screens/mentor/MentorDashboardPage'
 import MentorReviewQueuePage from '../screens/mentor/MentorReviewQueuePage'
 import AssociateDashboardPage from '../screens/associate/AssociateDashboardPage'
 import StudentDashboardPage from '../screens/student/StudentDashboardPage'
+import GrowthBoardsPage from '../screens/common/GrowthBoardsPage'
+import PlanRepositoryPage from '../screens/common/PlanRepositoryPage'
+import ReflectionSubmissionPage from '../screens/associate/ReflectionSubmissionPage'
 import { useAuthStore } from '../state/auth.store'
 import type { UserRole } from '../../domain/types'
 
@@ -38,20 +41,28 @@ function TopNav() {
       { label: 'Users', to: '/dashboard/admin/users' },
       { label: 'Oversight', to: '/dashboard/admin/oversight' },
       { label: 'Settings', to: '/dashboard/admin/settings' },
+      { label: 'Growth', to: '/dashboard/growth-boards' },
+      { label: 'Repo', to: '/dashboard/repository' },
     ],
     mentor: [
       { label: 'Dashboard', to: '/dashboard' },
       { label: 'Categories', to: '/dashboard/mentor/categories' },
       { label: 'Review Queue', to: '/dashboard/mentor/review-queue' },
       { label: 'Analytics', to: '/dashboard/mentor/analytics' },
+      { label: 'Growth', to: '/dashboard/growth-boards' },
+      { label: 'Repo', to: '/dashboard/repository' },
     ],
     associate: [
       { label: 'Dashboard', to: '/dashboard' },
       { label: 'Submit Plan', to: '/dashboard/associate/submit-plan' },
       { label: 'My Submissions', to: '/dashboard/associate/my-submissions' },
+      { label: 'Growth', to: '/dashboard/growth-boards' },
+      { label: 'Repo', to: '/dashboard/repository' },
     ],
     student: [
       { label: 'Dashboard', to: '/dashboard' },
+      { label: 'Growth', to: '/dashboard/growth-boards' },
+      { label: 'Repo', to: '/dashboard/repository' },
     ],
   }
 
@@ -107,7 +118,7 @@ function TopNav() {
   return (
     <>
       <header className="fixed top-0 w-full bg-surface-container-lowest border-b border-surface-border flex justify-between items-center px-4 md:px-8 h-16 z-50">
-        <h1 className="font-headline text-xl font-bold text-primary">Clarity Coach</h1>
+        <h1 className="font-headline text-xl font-bold text-primary">ReflectiEVE</h1>
 
         {isAuthenticated && navItems.length > 0 && (
           <nav className="hidden md:flex items-center gap-1 mx-6 flex-1 justify-center">
@@ -243,6 +254,8 @@ export default function AppRouter() {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<Protected><DashboardGateway /></Protected>} />
+          <Route path="/dashboard/growth-boards" element={<Protected><GrowthBoardsPage /></Protected>} />
+          <Route path="/dashboard/repository" element={<Protected><PlanRepositoryPage /></Protected>} />
           <Route path="/dashboard/admin/users" element={<Protected><RoleGate role="admin"><FeatureWorkspacePage title="Manage Users" subtitle="Create, update, and review user accounts." primaryActionLabel="Add user note" /></RoleGate></Protected>} />
           <Route path="/dashboard/admin/oversight" element={<Protected><RoleGate role="admin"><AdminAnalyticsPage /></RoleGate></Protected>} />
           <Route path="/dashboard/admin/rubrics" element={<Protected><RoleGate role="admin"><AdminRubricsPage /></RoleGate></Protected>} />
@@ -256,6 +269,7 @@ export default function AppRouter() {
           <Route path="/dashboard/associate/session-plan-review" element={<Navigate to="/dashboard/associate/submit-plan" replace />} />
           <Route path="/dashboard/associate/my-submissions" element={<Protected><RoleGate role="associate"><AssociateSubmissionsPage /></RoleGate></Protected>} />
           <Route path="/dashboard/associate/recent-submissions" element={<Navigate to="/dashboard/associate/my-submissions" replace />} />
+          <Route path="/dashboard/associate/reflect/:planId" element={<Protected><RoleGate role="associate"><ReflectionSubmissionPage /></RoleGate></Protected>} />
           <Route path="/dashboard/student/assignments" element={<Protected><RoleGate role="student"><StudentAssignmentReviewPage /></RoleGate></Protected>} />
           <Route path="/dashboard/student/progress" element={<Protected><RoleGate role="student"><StudentProgressPage /></RoleGate></Protected>} />
           <Route path="*" element={<Navigate to="/login" replace />} />

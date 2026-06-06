@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { UserRole } from '../../../domain/types'
 import { useAuthStore } from '../../state/auth.store'
@@ -46,7 +46,7 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           {/* Mobile brand */}
           <div className="md:hidden text-center mb-8">
-            <h1 className="font-headline text-3xl font-black text-primary">Clarity Coach</h1>
+            <h1 className="font-headline text-3xl font-black text-primary">ReflectiEVE</h1>
             <p className="text-sm text-text-muted mt-1">AI Coaching Platform</p>
           </div>
 

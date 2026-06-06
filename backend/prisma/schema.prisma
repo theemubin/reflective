@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id              String       @id @default(uuid())
+  email           String       @unique
+  fullName        String
+  role            String       // "student", "associate", "mentor", "admin"
+  growthIndex     Float        @default(0)
+  plans           Plan[]
+  reflections     Reflection[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model Plan {
+  id              String       @id @default(uuid())
+  title           String
+  category        String
+  status          String       // "draft", "submitted", "approved"
+  executions      Int          @default(0)
+  authorId        String
+  author          User         @relation(fields: [authorId], references: [id])
+  reflection      Reflection?  // A plan has one reflection after execution
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model Reflection {
+  id              String   @id @default(uuid())
+  assumptions     String   // "What assumptions did you have going into this that were proven wrong?"
+  blindSpots      String   // "What did you learn about your own blind spots?"
+  futureAdapt     String   // "How will you adapt this for future execution?"
+  reflectionDepth Float    // AI-graded score (0-10)
+  planId          String   @unique
+  plan            Plan     @relation(fields: [planId], references: [id])
+  authorId        String
+  author          User     @relation(fields: [authorId], references: [id])
+  createdAt       DateTime @default(now())
+}
