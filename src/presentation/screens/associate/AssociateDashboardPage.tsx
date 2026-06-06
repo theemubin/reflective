@@ -1,11 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../state/auth.store'
-import { useCategoriesStore } from '../../state/categories.store'
 
 export default function AssociateDashboardPage() {
   const navigate = useNavigate()
   const user = useAuthStore((s) => s.user)
-  const categories = useCategoriesStore((s) => s.categories)
 
   const firstName = user?.fullName?.split(' ')[0] ?? 'there'
 

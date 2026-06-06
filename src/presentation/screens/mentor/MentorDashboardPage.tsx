@@ -1,14 +1,11 @@
 import { useNavigate } from 'react-router-dom'
-import { useCategoriesStore } from '../../state/categories.store'
 import { useSubmissionsStore } from '../../state/submissions.store'
 
 export default function MentorDashboardPage() {
   const navigate = useNavigate()
-  const categories = useCategoriesStore((s) => s.categories)
   const submissions = useSubmissionsStore((s) => s.submissions)
   
   const pending = submissions.filter((s) => s.status === 'submitted_to_mentor')
-  const approved = submissions.filter((s) => s.status === 'approved')
 
   const riskAlerts = [
     { learner: 'David Kim', issue: 'Superficial reflections across last 3 plans.', severity: 'high' },

@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../../state/auth.store'
 
 export default function ReflectionSubmissionPage() {
   const { planId } = useParams()
   const navigate = useNavigate()
-  const user = useAuthStore((s) => s.user)
 
   const [assumptions, setAssumptions] = useState('')
   const [blindSpots, setBlindSpots] = useState('')
