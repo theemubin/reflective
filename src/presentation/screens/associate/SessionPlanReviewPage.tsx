@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -75,7 +75,7 @@ const METHODS = [
 ] as const
 
 export default function SessionPlanReviewPage() {
-  const { categories } = useCategoriesStore()
+  const categories = useCategoriesStore((s) => s.categories)
   const user = useAuthStore((s) => s.user)
   const saveAiReview = useSubmissionsStore((s) => s.saveAiReview)
   const submitToMentor = useSubmissionsStore((s) => s.submitToMentor)

@@ -117,8 +117,17 @@ function TopNav() {
 
   return (
     <>
-      <header className="fixed top-0 w-full bg-surface-container-lowest border-b border-surface-border flex justify-between items-center px-4 md:px-8 h-16 z-50">
-        <h1 className="font-headline text-xl font-bold text-primary">ReflectiEVE</h1>
+      <header
+        className="fixed top-0 w-full flex justify-between items-center px-4 md:px-8 h-16 z-50"
+        style={{
+          background: 'rgba(9,9,16,0.85)',
+          borderBottom: '1px solid rgba(255,255,255,0.07)',
+          backdropFilter: 'blur(20px)',
+        }}
+      >
+        <h1 className="font-headline text-xl font-black" style={{ background: 'linear-gradient(90deg, #a855f7, #6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          ReflectiEVE
+        </h1>
 
         {isAuthenticated && navItems.length > 0 && (
           <nav className="hidden md:flex items-center gap-1 mx-6 flex-1 justify-center">
@@ -126,11 +135,16 @@ function TopNav() {
               <button
                 key={item.to}
                 onClick={() => navigate(item.to)}
-                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+                className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
                   isActive(item.to)
-                    ? 'bg-secondary-container text-primary font-semibold'
-                    : 'text-on-surface-variant hover:bg-surface-container-low'
+                    ? 'text-white'
+                    : 'hover:text-white'
                 }`}
+                style={isActive(item.to) ? {
+                  background: 'linear-gradient(135deg, rgba(124,58,237,0.3), rgba(99,102,241,0.2))',
+                  color: '#c4b5fd',
+                  border: '1px solid rgba(124,58,237,0.3)',
+                } : { color: '#64748b' }}
               >
                 {item.label}
               </button>
@@ -141,11 +155,16 @@ function TopNav() {
         <div className="flex items-center gap-2 flex-shrink-0">
           <button
             onClick={openKeyDialog}
-            className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
-              activeProviders.any
-                ? 'bg-emerald-100 text-success-emerald border-emerald-200'
-                : 'border-outline-variant text-text-muted hover:bg-surface-container-low'
-            }`}
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all"
+            style={activeProviders.any ? {
+              background: 'rgba(16,185,129,0.15)',
+              color: '#34d399',
+              border: '1px solid rgba(16,185,129,0.3)',
+            } : {
+              background: 'rgba(255,255,255,0.05)',
+              color: '#64748b',
+              border: '1px solid rgba(255,255,255,0.1)',
+            }}
           >
             <span className="material-symbols-outlined" style={{ fontSize: 14 }}>
               {activeProviders.any ? 'check_circle' : 'key'}
@@ -155,19 +174,25 @@ function TopNav() {
 
           {isAuthenticated && (
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
+                style={{ background: 'linear-gradient(135deg, #7c3aed, #6366f1)' }}
+              >
                 {initials}
               </div>
               <div className="hidden md:block">
-                <p className="text-sm font-semibold text-text-main leading-tight">{user?.fullName ?? 'Guest'}</p>
-                <p className="text-xs text-text-muted capitalize">{role}</p>
+                <p className="text-sm font-semibold leading-tight" style={{ color: '#e2e8f0' }}>{user?.fullName ?? 'Guest'}</p>
+                <p className="text-xs capitalize" style={{ color: '#475569' }}>{role}</p>
               </div>
             </div>
           )}
 
           <button
             onClick={() => signOut()}
-            className="text-sm text-text-muted hover:text-primary px-2 py-1.5 rounded-lg hover:bg-surface-container-low transition-colors"
+            className="text-sm px-2 py-1.5 rounded-lg transition-colors"
+            style={{ color: '#475569' }}
+            onMouseEnter={(e) => { (e.target as HTMLButtonElement).style.color = '#a855f7' }}
+            onMouseLeave={(e) => { (e.target as HTMLButtonElement).style.color = '#475569' }}
           >
             Sign out
           </button>
@@ -175,16 +200,20 @@ function TopNav() {
       </header>
 
       {isAuthenticated && navItems.length > 1 && (
-        <nav className="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center h-16 px-4 bg-surface-container-lowest border-t border-surface-border z-50">
+        <nav
+          className="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center h-16 px-4 z-50"
+          style={{
+            background: 'rgba(9,9,16,0.95)',
+            borderTop: '1px solid rgba(255,255,255,0.07)',
+            backdropFilter: 'blur(20px)',
+          }}
+        >
           {navItems.slice(0, 3).map((item) => (
             <button
               key={item.to}
               onClick={() => navigate(item.to)}
-              className={`flex flex-col items-center justify-center gap-0.5 px-4 py-1 rounded-2xl transition-all duration-150 active:scale-95 ${
-                isActive(item.to)
-                  ? 'bg-secondary-container text-on-secondary-container'
-                  : 'text-on-surface-variant'
-              }`}
+              className="flex flex-col items-center justify-center gap-0.5 px-4 py-1 rounded-2xl transition-all duration-150 active:scale-95"
+              style={isActive(item.to) ? { color: '#a855f7' } : { color: '#475569' }}
             >
               <span className="material-symbols-outlined" style={{ fontSize: 22 }}>
                 {item.label === 'Dashboard' ? 'dashboard'
@@ -195,7 +224,7 @@ function TopNav() {
                   : item.label === 'Categories' ? 'category'
                   : 'chevron_right'}
               </span>
-              <span className="text-[11px] font-medium">{item.label}</span>
+              <span className="text-[11px] font-semibold">{item.label}</span>
             </button>
           ))}
         </nav>
@@ -247,7 +276,7 @@ function DashboardGateway() {
 
 export default function AppRouter() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen" style={{ background: '#090910' }}>
       <TopNav />
       <main className="pt-16 pb-16 md:pb-0 min-h-screen">
         <Routes>
